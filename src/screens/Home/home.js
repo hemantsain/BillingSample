@@ -17,10 +17,10 @@ import {
   removeExistingBillRequest,
   setIncrementalIdRequest,
 } from '../../state/actions';
-import BillListItem from '../../components/bill-list-item';
+import BillListItem from '../../components/BillListItem/bill-list-item';
 import { getFormattedDate } from '../../utils/utils';
 
-export default function Home() {
+export default function Home(props) {
   const dateFormat = 'DD-MM-YYYY';
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -39,7 +39,6 @@ export default function Home() {
   const getAllBillsState = useSelector(
     (state) => appState.appReducer.getAllBills,
   );
-  console.log('APp state', appState);
 
   const getCurrentId = () => {
     return appState.appReducer.currentId;
@@ -193,7 +192,13 @@ export default function Home() {
             onChangeText={searchData}
             value={searchText}
           />
-          <Button onPress={toggleOverlay} title="Add New Bill" />
+          <View style={homeStyles.buttonContainer}>
+            <Button onPress={toggleOverlay} title="Add New Bill" />
+            <Button
+              onPress={() => props.navigation.navigate('Chart')}
+              title="Open Chart"
+            />
+          </View>
           <FlatList
             data={listData}
             keyExtractor={(item, index) => index.toString()}
